@@ -1,0 +1,24 @@
+.toolbar{
+    border: 1px solid black;
+    height: 70px;
+}
+.tools-div{
+    margin: 0 0 0 10px;
+}
+.tools-div input{
+    margin: 5px 0;
+}
+.content{
+    border: 1px solid black;
+    height: 502px;
+    width: 668px;
+}
+
+canvas{
+
+}
+
+.center{
+    width: 50%;
+    margin: auto;
+}

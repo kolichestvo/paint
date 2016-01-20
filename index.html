@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery-2.2.js"></script>
+    <script src="Paint.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div class="toolbar center">
+        <div class="tools-div">
+            <form id="tools-form">
+                <label>Color:<input type='color' id='color'></label>
+                <label>Size:
+                    <select id="line-size">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option>
+                        <option value="25">25</option>
+                        <option value="35">35</option>
+                    </select>
+                </label>
+                <br>
+                <div id='tools'>
+                    <input type="radio" name="tool" class="tool" value="pen" checked="checked">Pen
+                    <input type="radio" name="tool" class="tool" value="fill">Fill
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="content center">
+        <canvas id="canvas" width="675" height="500"></canvas>
+    </div>
+</body>
+<script>
+$(document).ready(function(){
+    var paint = new Paint('canvas');
+    paint.init();
+});
+</script>
+</html>
