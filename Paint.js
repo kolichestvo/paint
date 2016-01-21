@@ -57,6 +57,15 @@ function Paint(canvasId){
                     paint.eraser(e);
                     break;
             }
+        },
+        drop: function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            paint.dropImage(e);
+        },
+        dragover: function(e){
+            e.preventDefault();
+            return false;
         }
     });
     $('button').click(function(e){
@@ -72,7 +81,6 @@ function Paint(canvasId){
                 break;
         }
     });
-
     $('#file-input').change(function(e){
         paint.openFile(this);
     });
@@ -128,6 +136,10 @@ function Paint(canvasId){
     };
 
     this.openFile = function(input){
+        if (input.files && input.files[0]) {
+            drawImageC(input.files[0]);
+        }
+        /*
         var reader = new FileReader();
         if (input.files && input.files[0]) {
             reader.onload = function (e) {
@@ -135,11 +147,44 @@ function Paint(canvasId){
                 img.src = e.target.result;
                 paint.ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
             };
-            reader.onprogress = function(){
-                console.log();
+            reader.onprogress = function(e){
+                paint.ctx.font = "30px Arial";
+                paint.ctx.fillText("Downloading..."+ e.loaded, cvs.width/2, cvs.height/2);
             };
+            //TODO сдклать прогресс бар на загрузку файла, onerror onabort
             reader.readAsDataURL(input.files[0]);
-        }
+        }*/
     };
+
+    this.dropImage = function(e){
+        var files = e.originalEvent.dataTransfer.files;
+        var file = files[0];
+        drawImageC(file);
+        /*
+        var files = e.originalEvent.dataTransfer.files;
+        if (files.files && files.files[0]) {
+            var file = files[0];
+            if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    paint.ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+                };
+                reader.readAsDataURL(file);
+            }
+        }*/
+    };
+
+    function drawImageC(file){
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var img = new Image();
+            img.src = e.target.result;
+            paint.ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+        };
+        reader.readAsDataURL(file);
+    }
     //***************************************************************************************************************[2]
 }
+//TODO добавить проверки!!
