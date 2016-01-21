@@ -17,8 +17,18 @@
 canvas{
 
 }
-
+.operations{
+    border: 1px solid black;
+    height: 40px;
+}
+.operations button{
+    margin: 10px 0 0 10px;
+}
 .center{
     width: 50%;
     margin: auto;
+}
+#file-input{
+    visibility: hidden;
+    position: absolute;
 }

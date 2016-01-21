@@ -5,19 +5,14 @@ function Paint(canvasId){
     this.isDrawing = false;
     this.options = {};
 
-    this.init = function(){
-        paint.options = {
-            color: $('#color').val().toLowerCase(),
-            tool: $(".tool[checked='checked']").val().toLowerCase(),
-            size: $('#line-size').val()
-        };
-    };
 /*
     $('body').mousedown(function(e){
         e.preventDefault();
     });
 */
     //сделать что-то с таким количеством change
+    //Зона листенеров
+    //[1]***************************************************************************************************************
     $('#color').change(function(){
          paint.options.color = $(this).val();
     });
@@ -39,6 +34,9 @@ function Paint(canvasId){
                 case 'fill':
                     paint.startFill(e);
                     break;
+                case 'eraser':
+                    paint.eraser(e);
+                    break;
             }
         },
         mouseup: function(e){
@@ -48,9 +46,45 @@ function Paint(canvasId){
             paint.stopPenDrawing();
         },
         mousemove: function(e){
-            paint.penDraw(e);
+            switch(paint.options.tool) {
+                case 'pen':
+                    paint.penDraw(e);
+                    break;
+                case 'fill':
+                    paint.startFill(e);
+                    break;
+                case 'eraser':
+                    paint.eraser(e);
+                    break;
+            }
         }
     });
+    $('button').click(function(e){
+        switch ($(this).val().toLowerCase()){
+            case 'save':
+                paint.saveOnLocal();
+                break;
+            case 'clean':
+                paint.cleanCanvas();
+                break;
+            case 'open':
+                $('#file-input').click();
+                break;
+        }
+    });
+
+    $('#file-input').change(function(e){
+        paint.openFile(this);
+    });
+    //***************************************************************************************************************[1]
+    //[2]***************************************************************************************************************
+    this.init = function(){
+        paint.options = {
+            color: $('#color').val().toLowerCase(),
+            tool: $(".tool[checked='checked']").val().toLowerCase(),
+            size: $('#line-size').val()
+        };
+    };
 
     this.startPenDrawing = function(e){
         paint.isPenDrawing = true;
@@ -75,5 +109,37 @@ function Paint(canvasId){
 
     this.startFill = function(e){
         console.log(paint.options.tool);
-    }
+    };
+
+    this.eraser = function(e){
+        paint.ctx.clearRect(e.clientX - cvs.offsetLeft, e.clientY - cvs.offsetTop, paint.options.size, paint.options.size);
+    };
+
+    this.saveOnLocal = function(){
+        var link = document.createElement('a');
+        link.target = "_blank";
+        link.download = "img.png";
+        link.href = cvs.toDataURL();
+        link.click();
+    };
+
+    this.cleanCanvas = function(){
+        paint.ctx.clearRect(0, 0, cvs.width, cvs.height);
+    };
+
+    this.openFile = function(input){
+        var reader = new FileReader();
+        if (input.files && input.files[0]) {
+            reader.onload = function (e) {
+                var img = new Image();
+                img.src = e.target.result;
+                paint.ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+            };
+            reader.onprogress = function(){
+                console.log();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
+    //***************************************************************************************************************[2]
 }

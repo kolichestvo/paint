@@ -27,14 +27,21 @@
                 </label>
                 <br>
                 <div id='tools'>
-                    <input type="radio" name="tool" class="tool" value="pen" checked="checked">Pen
-                    <input type="radio" name="tool" class="tool" value="fill">Fill
+                    <label><input type="radio" name="tool" class="tool" value="eraser">Eraser</label>
+                    <label><input type="radio" name="tool" class="tool" value="pen" checked="checked">Pen</label>
+                    <label><input type="radio" name="tool" class="tool" value="fill">Fill</label>
                 </div>
             </form>
         </div>
     </div>
     <div class="content center">
-        <canvas id="canvas" width="675" height="500"></canvas>
+        <canvas id="canvas" width="668" height="502"></canvas>
+    </div>
+    <div class="operations center">
+        <input type="file" id="file-input" accept="image/jpeg,image/png">
+        <button id="open" value="open">Open</button>
+        <button id="button-save" value="save">Save</button>
+        <button id="button-clean" value="clean">Clean</button>
     </div>
 </body>
 <script>
