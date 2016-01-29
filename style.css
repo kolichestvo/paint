@@ -6,7 +6,7 @@
     margin: 0 0 0 10px;
 }
 .tools-div input{
-    margin: 5px 0;
+    margin: 5px 3px;
 }
 .content{
     border: 1px solid black;
@@ -31,4 +31,7 @@ canvas{
 #file-input{
     visibility: hidden;
     position: absolute;
+}
+.dragover{
+    border: 1px solid cornflowerblue;
 }

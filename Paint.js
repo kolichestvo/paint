@@ -64,8 +64,12 @@ function Paint(canvasId){
             paint.dropImage(e);
         },
         dragover: function(e){
+            $(this).addClass('dragover');
             e.preventDefault();
             return false;
+        },
+        dragleave: function(e){
+            $(this).removeClass('dragover');
         }
     });
     $('button').click(function(e){
@@ -138,6 +142,8 @@ function Paint(canvasId){
     this.openFile = function(input){
         if (input.files && input.files[0]) {
             drawImageC(input.files[0]);
+        }else{
+            console.log('file not exist ');
         }
         /*
         var reader = new FileReader();
